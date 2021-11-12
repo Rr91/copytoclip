@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div>
+  <div class="to-copy"><div style="color:red">hello</div></div>
+  <button class="write-btn">Copy to clipboard</button>
+</div>
+
+<script>
+const writeBtn = document.querySelector('.write-btn');
+const inputEl = document.querySelector('.to-copy');
+
+writeBtn.addEventListener('click', () => {
+  const inputValue = htmlspecialchars(inputEl.innerHTML);
+  if (inputValue) {
+    navigator.clipboard.writeText(inputValue)
+      .then(() => {
+        if (writeBtn.innerText !== 'Copied!') {
+          const originalText = writeBtn.innerText;
+          writeBtn.innerText = 'Copied!';
+          setTimeout(() => {
+            writeBtn.innerText = originalText;
+          }, 1500);
+        }
+      })
+      .catch(err => {
+        console.log('Something went wrong', err);
+      })
+  }
+});
+
+function htmlspecialchars(html) { 
+      html = html.replace("&amp;", /&/g); 
+
+      html = html.replace("&quot;", /"/g); 
+
+      html = html.replace("&gt;", />/g); 
+
+      html = html.replace("&lt;", /</g); 
+
+      return html; 
+}
+</script>
+</body>
+</html>
